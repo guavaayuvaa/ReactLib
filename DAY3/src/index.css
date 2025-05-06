@@ -1,0 +1,18 @@
+/* Theme classes */
+.theme-light {
+  background-color: white;
+  color: black;
+  transition: all 0.3s ease;
+}
+
+.theme-dark {
+  background-color: #121212;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+/* General body style */
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
