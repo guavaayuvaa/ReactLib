@@ -1,0 +1,6 @@
+export const createCartSlice = (set) => ({
+  cart: [],
+  addToCart: (item) =>
+    set((state) => ({ cart: [...state.cart, item] })),
+  clearCart: () => set({ cart: [] }),
+});
