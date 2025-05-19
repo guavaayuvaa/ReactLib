@@ -8,7 +8,7 @@ function App() {
   return (
     <ThemeProvider>
       <div style={{ padding: '2rem' }}>
-        <h1>React Custom Hooks & Theme Context Demo</h1>
+        <h1>Custom Hooks & Theme Context </h1>
 
         <ThemeToggle />
 
