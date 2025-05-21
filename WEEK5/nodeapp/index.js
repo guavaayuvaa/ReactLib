@@ -21,7 +21,7 @@ function saveNote(title, content) {
 
 function getNotes() {
   return JSON.parse(fs.readFileSync(notesPath, 'utf-8'));
-}
+} 
 
 function listNotes() {
   const notes = getNotes();
@@ -34,7 +34,8 @@ function listNotes() {
 function deleteNote(id) {
   const notes = getNotes();
   const updated = notes.filter(note => note.id !== id);
-  fs.writeFileSync(notesPath, JSON.stringify(updated, null, 2));
+  console.log(updated);
+  /*fs.writeFileSync(notesPath, JSON.stringify(updated, null, 2));*/
   console.log(` Note with ID ${id} deleted.`);
 }
 
