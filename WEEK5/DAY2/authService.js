@@ -1,13 +1,17 @@
-const crypto = require('crypto');
+const bcrypt = require('bcrypt');
 const { isValidEmail } = require('./utils');
-
 const users = [];
 
-function hashPassword(password) {
-  return crypto.createHash('sha256').update(password).digest('hex');
+async function hashPassword(password) {
+  return await bcrypt.hash(password, 10);
 }
 
-function registerUser({ name, email, password }) {
+async function verifyPassword(inputPassword, storedHash) {
+  return await bcrypt.compare(inputPassword, storedHash);
+}
+
+
+async function registerUser({ name, email, password }) {
   if (!name || !email || !password) {
     return { error: 'Name, email, and password are required' };
   }
@@ -21,12 +25,13 @@ function registerUser({ name, email, password }) {
     return { error: 'User already exists' };
   }
 
-  const hashedPassword = hashPassword(password);
+  const hashedPassword = await hashPassword(password);
   users.push({ name, email, password: hashedPassword });
   return { success: true };
 }
 
-function loginUser({ email, password }) {
+
+async function loginUser({ email, password }) {
   if (!email || !password) {
     return { error: 'Email and password are required' };
   }
@@ -36,12 +41,12 @@ function loginUser({ email, password }) {
     return { error: 'Invalid email or password' };
   }
 
-  const hashedPassword = hashPassword(password);
-  if (user.password !== hashedPassword) {
+  const isMatch = await verifyPassword(password, user.password);
+  if (!isMatch) {
     return { error: 'Invalid email or password' };
   }
 
-  const token = crypto.randomBytes(16).toString('hex');
+  const token = require('crypto').randomBytes(16).toString('hex');
   return { token };
 }
 
